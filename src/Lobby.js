@@ -16,7 +16,7 @@ function Lobby() {
       // 로그인 후 이동할 경로 설정
       navigate('/home');
     } catch (error) {
-      alert('로그인 실패: ' + error.message);
+      alert('로그인 실패 : ' + error.message);
     }
   };
 
