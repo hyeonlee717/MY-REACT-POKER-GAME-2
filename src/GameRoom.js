@@ -130,8 +130,7 @@ function GameRoom() {
   return (
     <div>
       <h1>Texas Hold'em Game Room</h1>
-      <h2>Room ID: {roomUid}</h2>
-      <h3>Small Blind: {smallBlind} / Big Blind: {bigBlind}</h3>
+      <h3>SB: {smallBlind} / BB: {bigBlind}</h3>
 
       <div className="seats">
         {seats.map((seat, index) => (
