@@ -63,6 +63,7 @@ function Signup() {
       // 인증 완료 후 데이터베이스에 사용자 정보 저장
       await set(ref(database, 'users/' + user.uid), {
         email: user.email,
+        balance: 0, // 초기 잔액 설정
         createdAt: serverTimestamp()
       });
 
@@ -94,7 +95,7 @@ function Signup() {
       </button>
       {/* 회원가입 버튼은 인증이 완료된 경우에만 활성화 */}
       <button onClick={handleSignUp} disabled={!isVerified}>
-        회원가입
+        회원가입 완료
       </button>
       <button onClick={() => navigate('/login')}>로그인으로 돌아가기</button>
     </div>
