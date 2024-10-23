@@ -40,7 +40,7 @@ function GameLobby() {
   return (
     <div>
       <h1>TEXAS HOLD'EM GAME LOBBY</h1>
-      <p>Balance : {balance}원</p>
+      <p>Balance : {balance}</p>
       <h2>Cash Game</h2>
       <ul>
         {rooms.map((room) => (
