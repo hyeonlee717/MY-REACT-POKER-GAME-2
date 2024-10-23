@@ -39,9 +39,9 @@ function GameLobby() {
 
   return (
     <div>
-      <h1>게임 로비</h1>
-      <p>나의 현재 잔액: {balance}원</p>
-      <h2>방 목록</h2>
+      <h1>TEXAS HOLD'EM GAME LOBBY</h1>
+      <p>Balance : {balance}원</p>
+      <h2>Cash Game</h2>
       <ul>
         {rooms.map((room) => (
           <li key={room.roomUid}>
