@@ -12,8 +12,6 @@ function Lobby() {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password.trim());
-      alert('로그인 성공!');
-      // 로그인 후 이동할 경로 설정
       navigate('/gamelobby');
     } catch (error) {
       alert('로그인 실패 : ' + error.message);
