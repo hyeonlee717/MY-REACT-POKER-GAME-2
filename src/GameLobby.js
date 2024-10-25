@@ -60,24 +60,30 @@ function GameLobby() {
     }
   };
 
-  const joinRoom = async (room) => {
+  async function joinRoom(room) {
     if (!auth.currentUser) return;
-  
+
     const user = auth.currentUser;
+    const playerRef = ref(database, `rooms/${room.id}/players/${user.uid}`);
     const waitingPlayerRef = ref(database, `rooms/${room.id}/waitingPlayers/${user.uid}`);
-  
+
     try {
-      const playerSnapshot = await get(waitingPlayerRef);
-  
-      // 플레이어가 아직 대기 중인 목록에 없는 경우에만 추가
+      // 먼저 사용자가 이미 players에 있는지 확인
+      const playerSnapshot = await get(playerRef);
+
       if (!playerSnapshot.exists()) {
-        const waitingPlayerInfo = {
-          uid: user.uid,
-          email: user.email,
-        };
-        await set(waitingPlayerRef, waitingPlayerInfo);
+        // 사용자가 players에 없을 때만 waitingPlayers에 추가
+        const waitingPlayerSnapshot = await get(waitingPlayerRef);
+
+        if (!waitingPlayerSnapshot.exists()) {
+          const waitingPlayerInfo = {
+            uid: user.uid,
+            email: user.email,
+          };
+          await set(waitingPlayerRef, waitingPlayerInfo);
+        }
       }
-  
+
       // 이제 방으로 이동
       navigate(`/room/${room.id}`, { state: room });
     } catch (error) {

@@ -1,8 +1,9 @@
 // Lobby.js
 import React, { useState } from 'react';
-import { auth } from './firebase';
+import { auth, database } from './firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { ref, update, onDisconnect } from 'firebase/database'; // 추가
 
 function Lobby() {
   const [email, setEmail] = useState('');
@@ -12,6 +13,15 @@ function Lobby() {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password.trim());
+      const user = auth.currentUser;
+      const userRef = ref(database, `users/${user.uid}`);
+  
+      // 로그인 상태를 true로 설정
+      await update(userRef, { loggedIn: true });
+  
+      // 연결이 끊어질 때 loggedIn을 false로 설정
+      onDisconnect(userRef).update({ loggedIn: false });
+  
       navigate('/gamelobby');
     } catch (error) {
       alert('로그인 실패 : ' + error.message);

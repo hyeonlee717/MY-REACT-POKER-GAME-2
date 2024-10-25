@@ -39,6 +39,10 @@ function GameRoom() {
 
   const handleSeatClick = (index) => {
     if (seats[index] === null) {
+      if (isAlreadySeated) {
+        alert('이미 자리에 앉아 있습니다.');
+        return;
+      }
       setSelectedSeat(index);
     }
   };
@@ -57,7 +61,10 @@ function GameRoom() {
   };
 
   const handleSit = async () => {
-    if (!auth.currentUser) return;
+    if (!auth.currentUser || isAlreadySeated) {
+      alert('이미 자리에 앉아 있습니다.');
+      return;
+    }
   
     const user = auth.currentUser;
     const userBalanceRef = ref(database, `users/${user.uid}/balance`);
